@@ -1,0 +1,7 @@
+.git
+.claude
+.gitignore
+.dockerignore
+tmp
+labelsrv
+*.pdf
