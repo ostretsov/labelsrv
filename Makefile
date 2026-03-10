@@ -27,6 +27,13 @@ docker-push:
 	docker push $(IMAGE):$(VERSION)
 	docker push $(IMAGE):latest
 
+.PHONY: retag
+retag:
+	git tag -d $(VERSION) 2>/dev/null || true
+	git push origin :refs/tags/$(VERSION) 2>/dev/null || true
+	git tag $(VERSION)
+	git push origin $(VERSION)
+
 .PHONY: lint
 lint:
 	$(DOCKER_LINT) golangci-lint run --build-tags=test

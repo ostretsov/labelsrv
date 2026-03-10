@@ -25,9 +25,8 @@ LABEL org.opencontainers.image.title="labelsrv" \
       org.opencontainers.image.source="${SOURCE}"
 
 COPY --from=builder /labelsrv /labelsrv
-COPY --from=builder /src/labels /labels
 
-VOLUME ["/fonts"]
+VOLUME ["/labels", "/fonts"]
 
 EXPOSE 8080
 
