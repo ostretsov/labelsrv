@@ -128,6 +128,13 @@ func startServer(port int, labelsDir, fontsDir string, dev bool) error {
 		fmt.Printf("  watching      %s\n", labelsDir)
 	}
 
+	templates := loader.List()
+	fmt.Printf("  templates (%d)\n", len(templates))
+
+	for _, name := range templates {
+		fmt.Printf("    - %s\n", name)
+	}
+
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return fmt.Errorf("server: %w", err)
 	}
