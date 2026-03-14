@@ -1,0 +1,664 @@
+name: demo
+
+size:
+  width: 4in
+  height: 6in
+
+inputs:
+  barcode:
+    type: string
+    required: true
+    description: Barcode value to encode
+
+  delivery_address:
+    type: string
+    required: true
+    description: Delivery address (name + address lines)
+
+  label_creation_datetime:
+    type: string
+    required: true
+    description: Label creation date and time (e.g. "2024-06-01 14:30:36")
+
+  # line 1
+  line1_description:
+    type: string
+    required: true
+    description: Quantity and item description (e.g. "2x Widget A")
+
+  line1_weight_kg:
+    type: string
+    required: true
+    description: Weight in kg for line 1 (e.g. "1.5")
+
+  line1_value_usd:
+    type: string
+    required: true
+    description: Declared value in USD for line 1 (e.g. "100.00 USD")
+
+  line1_hs_code:
+    type: string
+    required: true
+    description: HS code for line 1 (e.g. "123456")
+
+  # line 2
+  line2_description:
+    type: string
+    required: false
+    description: Quantity and item description for line 2 (e.g. "1x Widget B")
+
+  line2_weight_kg:
+    type: string
+    required: false
+    description: Weight in kg for line 2 (e.g. "0.5")
+
+  line2_value_usd:
+    type: string
+    required: false
+    description: Declared value in USD for line 2 (e.g. "50.00 USD")
+
+  line2_hs_code:
+    type: string
+    required: false
+    description: HS code for line 2 (e.g. "654321")
+
+  # line 3
+  line3_description:
+    type: string
+    required: false
+    description: Quantity and item description for line 3 (e.g. "3x Widget C")
+
+  line3_weight_kg:
+    type: string
+    required: false
+    description: Weight in kg for line 3 (e.g. "2.0")
+
+  line3_value_usd:
+    type: string
+    required: false
+    description: Declared value in USD for line 3 (e.g. "150.00 USD")
+
+  line3_hs_code:
+    type: string
+    required: false
+    description: HS code for line 3 (e.g. "789012")
+
+  # line 4
+  line4_description:
+    type: string
+    required: false
+    description: Quantity and item description for line 4 (e.g. "1x Widget D")
+
+  line4_weight_kg:
+    type: string
+    required: false
+    description: Weight in kg for line 4 (e.g. "0.8")
+
+  line4_value_usd:
+    type: string
+    required: false
+    description: Declared value in USD for line 4 (e.g. "80.00 USD")
+
+  line4_hs_code:
+    type: string
+    required: false
+    description: HS code for line 4 (e.g. "345678")
+
+  # line 5
+  line5_description:
+    type: string
+    required: false
+    description: Quantity and item description for line 5 (e.g. "5x Widget E")
+
+  line5_weight_kg:
+    type: string
+    required: false
+    description: Weight in kg for line 5 (e.g. "3.0")
+
+  line5_value_usd:
+    type: string
+    required: false
+    description: Declared value in USD for line 5 (e.g. "200.00 USD")
+
+  line5_hs_code:
+    type: string
+    required: false
+    description: HS code for line 5 (e.g. "901234")
+
+  # total
+  total_weight_kg:
+    type: string
+    required: true
+    description: Total weight in kg (e.g. "1.5")
+
+  total_value_usd:
+    type: string
+    required: true
+    description: Total declared value in USD (e.g. "100.00 USD")
+
+layout:
+  - id: header_barcode_text
+    type: text
+    value: "Custom Label Demo"
+    x: 8
+    y: 2.5
+    font_size: 8
+
+  - id: header_barcode
+    type: barcode
+    source: input
+    key: barcode
+    barcode_type: code128
+    x: 6
+    y: 6
+    width: 90
+    height: 10
+
+  - id: header_barcode_value
+    type: textbox
+    source: input
+    key: barcode
+    x: 3
+    y: 17
+    width: 96
+    height: 4
+    font_size: 9
+    #    border_color: "#000000"
+    align: "C"
+
+  # Destination
+  - id: dst_to_rect
+    type: rect
+    x: 3
+    y: 22
+    width: 96
+    height: 4
+    line_width: 0.2
+    color: "#000000"
+
+  - id: dst_to_text
+    type: text
+    value: "To Some Country"
+    x: 4
+    y: 22.5
+    font_size: 8
+
+  - id: dst_addr_rect
+    type: rect
+    x: 3
+    y: 26
+    width: 96
+    height: 30
+    line_width: 0.2
+    color: "#000000"
+
+  - id: dst_addr_text
+    type: textbox
+    source: input
+    key: delivery_address
+    x: 4
+    y: 27
+    width: 94
+    height: 28
+    font_size: 10
+    font_style: bold
+  #    border_color: "#FF0000"
+
+  - id: middle_sep_barcode
+    type: barcode
+    source: input
+    key: barcode
+    barcode_type: code128
+    x: 30
+    y: 56.2
+    width: 80
+    height: 10
+
+  - id: middle_sep_barcode_text
+    type: textbox
+    source: input
+    key: barcode
+    #    border_color: "#000000"
+    x: 4
+    y: 59.5
+    width: 45
+    height: 4
+    font_size: 9
+    align: "C"
+
+  - id: deatils_from_title_rect
+    type: rect
+    x: 3
+    y: 66.5
+    width: 96
+    height: 4
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_from_title_text
+    type: text
+    value: "From Your Company Name, Your Street Address, Your City, Your Country"
+    x: 3
+    y: 66.8
+    font_size: 8
+
+  - id: details_table_header
+    type: rect
+    x: 3
+    y: 70.5
+    width: 96
+    height: 4
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_header_text
+    type: text
+    value: "Shipment details (country of origin: USA)"
+    x: 3
+    y: 70.8
+    font_size: 8
+    font_style: bold
+
+  - id: details_table_header_creation_datetime
+    type: text
+    source: input
+    key: label_creation_datetime
+    x: 68
+    y: 70.8
+    font_size: 9
+    font_style: bold
+
+  - id: details_table_outline_rect
+    type: rect
+    x: 3
+    y: 74.5
+    width: 96
+    height: 65
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_header_hr_line
+    type: line
+    x: 3
+    y: 82
+    x2: 99
+    y2: 82
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_description_vert_line
+    type: line
+    x: 60
+    y: 74.5
+    x2: 60
+    y2: 139.5
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_header_weight_vert_line
+    type: line
+    x: 72
+    y: 74.5
+    x2: 72
+    y2: 139.5
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_header_value_vert_line
+    type: line
+    x: 85
+    y: 74.5
+    x2: 85
+    y2: 139.5
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_header_cell1_description_text
+    type: textbox
+    value: "Quantity and description"
+    x: 3
+    y: 76.5
+    width: 57
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  - id: details_table_header_cell2_weight_text
+    type: textbox
+    value: "Weight kg"
+    #    border_color: "#ff0000"
+    x: 60
+    y: 75
+    width: 12
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  - id: details_table_header_cell3_value_text
+    type: textbox
+    value: "Value USD"
+    x: 71
+    y: 75
+    width: 14
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  - id: details_table_header_cell3_hs_code_text
+    type: textbox
+    value: "HS tariff code"
+    x: 84
+    y: 75
+    width: 15
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  # line 1
+  - id: details_table_row1_cell1_description_text
+    type: textbox
+    clip: true
+    source: input
+    key: line1_description
+    x: 3
+    y: 83
+    width: 57
+    height: 10
+    font_size: 8
+    align: "L"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row1_cell2_weight_text
+    type: textbox
+    source: input
+    key: line1_weight_kg
+    x: 60
+    y: 83
+    width: 12
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row1_cell3_value_text
+    type: textbox
+    source: input
+    key: line1_value_usd
+    x: 72
+    y: 83
+    width: 13
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row1_cell4_hs_code_text
+    type: textbox
+    source: input
+    key: line1_hs_code
+    x: 85
+    y: 83
+    width: 14
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  # line 2
+  - id: details_table_row2_cell1_description_text
+    type: textbox
+    clip: true
+    source: input
+    key: line2_description
+    x: 3
+    y: 93
+    width: 57
+    height: 10
+    font_size: 8
+    align: "L"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row2_cell2_weight_text
+    type: textbox
+    source: input
+    key: line2_weight_kg
+    x: 60
+    y: 93
+    width: 12
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row2_cell3_value_text
+    type: textbox
+    source: input
+    key: line2_value_usd
+    x: 72
+    y: 93
+    width: 13
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row2_cell4_hs_code_text
+    type: textbox
+    source: input
+    key: line2_hs_code
+    x: 85
+    y: 93
+    width: 14
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  # line 3
+  - id: details_table_row3_cell1_description_text
+    type: textbox
+    clip: true
+    source: input
+    key: line3_description
+    x: 3
+    y: 103
+    width: 57
+    height: 10
+    font_size: 8
+    align: "L"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row3_cell2_weight_text
+    type: textbox
+    source: input
+    key: line3_weight_kg
+    x: 60
+    y: 103
+    width: 12
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row3_cell3_value_text
+    type: textbox
+    source: input
+    key: line3_value_usd
+    x: 72
+    y: 103
+    width: 13
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row3_cell4_hs_code_text
+    type: textbox
+    source: input
+    key: line3_hs_code
+    x: 85
+    y: 103
+    width: 14
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  # line 4
+  - id: details_table_row4_cell1_description_text
+    type: textbox
+    clip: true
+    source: input
+    key: line4_description
+    x: 3
+    y: 113
+    width: 57
+    height: 10
+    font_size: 8
+    align: "L"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row4_cell2_weight_text
+    type: textbox
+    source: input
+    key: line4_weight_kg
+    x: 60
+    y: 113
+    width: 12
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row4_cell3_value_text
+    type: textbox
+    source: input
+    key: line4_value_usd
+    x: 72
+    y: 113
+    width: 13
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row4_cell4_hs_code_text
+    type: textbox
+    source: input
+    key: line4_hs_code
+    x: 85
+    y: 113
+    width: 14
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  # line 5
+  - id: details_table_row5_cell1_description_text
+    type: textbox
+    clip: true
+    source: input
+    key: line5_description
+    x: 3
+    y: 123
+    width: 57
+    height: 10
+    font_size: 8
+    align: "L"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row5_cell2_weight_text
+    type: textbox
+    source: input
+    key: line5_weight_kg
+    x: 60
+    y: 123
+    width: 12
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row5_cell3_value_text
+    type: textbox
+    source: input
+    key: line5_value_usd
+    x: 72
+    y: 123
+    width: 13
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  - id: details_table_row5_cell4_hs_code_text
+    type: textbox
+    source: input
+    key: line5_hs_code
+    x: 85
+    y: 123
+    width: 14
+    height: 10
+    font_size: 8
+    align: "C"
+  #    border_color: "#0000FF"
+
+  # summary
+  - id: details_table_summary_hr_line
+    type: line
+    x: 3
+    y: 134.5
+    x2: 99
+    y2: 134.5
+    line_width: 0.2
+    color: "#000000"
+
+  - id: details_table_summary_total_text
+    type: textbox
+    value: "Total"
+    x: 3
+    y: 135
+    width: 57
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "R"
+
+  - id: details_table_summary_total_weight_text
+    type: textbox
+    source: input
+    key: total_weight_kg
+    x: 60
+    y: 135
+    width: 12
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  - id: details_table_summary_total_value_text
+    type: textbox
+    source: input
+    key: total_value_usd
+    x: 72
+    y: 135
+    width: 13
+    height: 4
+    font_size: 8
+    font_style: bold
+    align: "C"
+
+  - id: bottom_info_box
+    type: textbox
+    value: "I confirm that the shipment does not contain items prohibited for transportation. I am familiar with the main rules of transportation. I agree to the collection, processing, and storage of personal data."
+    x: 3
+    y: 140
+    width: 96
+    height: 10
+    font_size: 7
+    align: "L"

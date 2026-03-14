@@ -1,6 +1,8 @@
 # labelsrv
 
-A configuration-driven label rendering server. Define labels as YAML templates, render them to PDF via HTTP or CLI.
+A configuration-driven label rendering server. Define labels as YAML templates, render them to PDF via HTTP or CLI. Watch the demo on YouTube:
+
+[![Watch the demo](https://img.youtube.com/vi/sGFVaIbe_ns/hqdefault.jpg)](https://youtu.be/sGFVaIbe_ns)
 
 ## What it does
 
@@ -14,17 +16,7 @@ A configuration-driven label rendering server. Define labels as YAML templates, 
 ## Quick start
 
 ```sh
-# Render the demo label to a PDF file
-go run ./cmd/labelsrv render labels/demo.yaml data/example.json -o out.pdf
-
-# Start the server
-go run ./cmd/labelsrv serve --labels labels
-
-# Render via HTTP
-curl -X POST http://localhost:8080/labels/demo \
-  -H 'Content-Type: application/json' \
-  -d '{"item_name": "Widget Pro", "tracking_number": "1Z9999999"}' \
-  --output label.pdf
+docker run --rm -p 8080:8080 -v ./labels:/labels ostretsov/labelsrv:v1.0.1 dev
 ```
 
 ## CLI
@@ -263,25 +255,6 @@ visible_if: "ne(status, pending)"      # not equal
 | `barcode_type` | barcode | `code128`, `qr`, `ean13`, `code39` |
 | `src` | image | File path |
 | `visible_if` | all | Conditional expression |
-
-## Docker Hub
-
-Set `IMAGE` to your Docker Hub repository (e.g. `ostretsov/labelsrv`), then:
-
-```sh
-# Build and tag with the current git version
-make docker-build IMAGE=ostretsov/labelsrv
-
-# Push both the versioned tag and latest
-make docker-push IMAGE=ostretsov/labelsrv
-```
-
-Version is derived from `git describe --tags` (e.g. `v1.2.3`). Tag your release:
-
-```sh
-git tag v1.0.0
-make docker-build docker-push IMAGE=ostretsov/labelsrv
-```
 
 ## Development
 

@@ -1,0 +1,18 @@
+POST http://localhost:8080/labels/demo?format=pdf
+Content-Type: application/json
+
+{
+  "barcode": "TRK1234561789US",
+  "delivery_address": "John Doe\n\n123 Main St, Anytown, USA 12345",
+  "label_creation_datetime": "2026-03-14 15:12:36",
+
+  "line1_description": "1 x ASICS Men's DYNABLAST 5 Running Shoes",
+  "line1_hs_code": "640290",
+  "line1_value_usd": "99.95",
+  "line1_weight_kg": "0.3",
+
+  "total_weight_kg": "0.4",
+  "total_value_usd": "299.71"
+}
+
+>>! /tmp/demo.pdf
