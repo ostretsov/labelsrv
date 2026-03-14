@@ -10,7 +10,7 @@ A configuration-driven label rendering server. Define labels as YAML templates, 
 - Templates are YAML files that describe layout, inputs, and constants
 - Supports text, barcodes (Code128, QR, EAN13), images, lines, rectangles, and text boxes
 - Conditional element visibility based on input values
-- Unicode and Cyrillic text out of the box (FreeSans font embedded)
+- Supports custom TTF fonts loaded from a directory
 - Auto-generated OpenAPI spec and interactive docs at `/docs`
 
 ## Quick start
