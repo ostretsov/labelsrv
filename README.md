@@ -16,7 +16,30 @@ A configuration-driven label rendering server. Define labels as YAML templates, 
 ## Quick start
 
 ```sh
-docker run --rm -p 8080:8080 -v ./labels:/labels ostretsov/labelsrv:v1.0.1 dev
+# Create a test directory and download the demo template
+mkdir /tmp/labelsrv-test && cd /tmp/labelsrv-test
+wget https://raw.githubusercontent.com/ostretsov/labelsrv/refs/heads/main/demo/labels/demo.yaml
+
+# Run the server with the current directory as the labels source
+docker run --rm -p 8080:8080 -v ./:/labels ostretsov/labelsrv:v1.0.2 dev
+
+# Render a label to PDF using the API and save it to /tmp/demo.pdf
+curl -X POST "http://localhost:8080/labels/demo?format=pdf" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "barcode": "TRK1234561789US",
+    "delivery_address": "John Doe\n\n123 Main St, Anytown, USA 12345",
+    "label_creation_datetime": "2026-03-14 15:12:36",
+
+    "line1_description": "1 x ASICS Men'\''s DYNABLAST 5 Running Shoes",
+    "line1_hs_code": "640290",
+    "line1_value_usd": "99.95",
+    "line1_weight_kg": "0.3",
+
+    "total_weight_kg": "0.4",
+    "total_value_usd": "299.71"
+  }' \
+  -o /tmp/demo.pdf
 ```
 
 ## CLI
@@ -85,20 +108,10 @@ size:
   width: 4in          # units: in, mm, cm, pt
   height: 6in
 
-inputs:
-  recipient:
-    type: string
-    required: true
-    description: Recipient name
-    max_length: 80
+inputs:  
   tracking_number:
     type: string
-    required: false
-
-constants:
-  company:
-    value: "ACME Corp"
-    locked: true
+    required: true
 
 layout:
   - id: title
@@ -108,6 +121,16 @@ layout:
     y: 4
     font_size: 18
     font_style: bold
+  
+  - id: barcode
+    type: barcode
+    source: input
+    key: tracking_number
+    barcode_type: code128
+    x: 6
+    y: 6
+    width: 90
+    height: 10
 ```
 
 ### Layout element types
@@ -256,20 +279,3 @@ visible_if: "ne(status, pending)"      # not equal
 | `src` | image | File path |
 | `visible_if` | all | Conditional expression |
 
-## Development
-
-```sh
-# Run tests
-go test ./...
-
-# Lint (requires Docker)
-make lint
-
-# Build binary with version injected
-make build
-
-# Start with hot-reload — edit templates and re-render without restart
-go run ./cmd/labelsrv dev
-```
-
-Templates are read from disk on every request, so you can edit YAML files and immediately see the result without restarting the server.
